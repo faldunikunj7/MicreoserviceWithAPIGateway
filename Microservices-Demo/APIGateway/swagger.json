@@ -1,0 +1,450 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Microservice - Demo",
+        "description": "Microservice demo  API Doc"
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Users-Authorization"
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User with new values of properties",
+                        "schema": {
+                            "required": [
+                                "email",
+                                "password"
+                            ],
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "summary": "User Login API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "token": {
+                                    "type": "string"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "organizationName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Users-Authorization"
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User with new values of properties",
+                        "schema": {
+                            "required": [
+                                "email",
+                                "password"
+                            ],
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "organizationName": {
+                                    "type": "string",
+                                    "default": "Kroger"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "summary": "User Register API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "token": {
+                                    "type": "string"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "organizationName": {
+                                    "type": "string",
+                                    "default": "Kroger"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    }
+                ],
+                "summary": "Get all users in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    }
+                ],
+                "summary": "Update user profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/post": {
+            "get": {
+                "tags": [
+                    "User - Post"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    }
+                ],
+                "summary": "Get all users Post",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Posts"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User - Post"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "PostAddData",
+                        "in": "body",
+                        "description": "Post add Data",
+                        "schema": {
+                            "$ref": "#/definitions/add_update_Post"
+                        }
+                    }
+                ],
+                "summary": "Get all users Post",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{id}": {
+            "get": {
+                "tags": [
+                    "User - Post"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post id for detail",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Get Post details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User - Post"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post id for delete",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "delete Post",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User - Post"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User auth token",
+                        "type": "string",
+                        "required": true,
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post id for update",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "PostUpdateData",
+                        "in": "body",
+                        "description": "Post update Data",
+                        "schema": {
+                            "$ref": "#/definitions/add_update_Post"
+                        }
+                    }
+                ],
+                "summary": "Update Post ",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "required": [
+                "name",
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "organizationName": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateUser": {
+            "required": [
+                "name",
+                "companies"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "organizationName": {
+                    "type": "string"
+                }
+            }
+        },
+        "Post": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "add_update_Post": {
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "Posts": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Post"
+            }
+        }
+    }
+}
